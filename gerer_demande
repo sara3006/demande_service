@@ -1,0 +1,13 @@
+package services;
+
+public abstract class GererDemande {
+    protected String nomClient;  // Nom du client qui fait la demande
+
+    // Constructeur qui initialise le nom du client
+    public GererDemande(String nomClient) {
+        this.nomClient = nomClient;
+    }
+
+    // Méthode abstraite à implémenter dans les sous-classes
+    public abstract void executer();
+}
