@@ -1,0 +1,39 @@
+package models;
+import services.DemandeService;
+import java.util.Date;
+
+public class DemandeActivite extends DemandeService {
+    private String nomActivite;
+    private Date dateActivite;
+    private int nombreParticipants;
+    private boolean guideNecessaire;
+
+    public DemandeActivite(String client, String nomActivite, Date dateActivite,int nombreParticipants, boolean guideNecessaire) {
+        super(client);  // Appel du constructeur parent avec le nom du client
+        this.nomActivite = nomActivite;
+        this.dateActivite = dateActivite;
+        this.nombreParticipants = nombreParticipants;
+        this.guideNecessaire = guideNecessaire;
+    }
+
+    // Getters
+    public String getNomActivite() { return nomActivite; }
+    public Date getDateActivite() { return dateActivite; }
+    public int getNombreParticipants() { return nombreParticipants; }
+    public boolean isGuideNecessaire() { return guideNecessaire; }
+
+    // Setters
+    public void setNomActivite(String nomActivite) { this.nomActivite = nomActivite; }
+    public void setDateActivite(Date dateActivite) { this.dateActivite = dateActivite; }
+    public void setNombreParticipants(int nombreParticipants) { this.nombreParticipants = nombreParticipants; }
+    public void setGuideNecessaire(boolean guideNecessaire) { this.guideNecessaire = guideNecessaire; }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                ", Activité: " + nomActivite +
+                ", Date: " + dateActivite +
+                ", Participants: " + nombreParticipants +
+                ", Guide: " + (guideNecessaire ? "Oui" : "Non");
+    }
+}
