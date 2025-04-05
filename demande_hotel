@@ -1,0 +1,50 @@
+package models;
+
+import services.DemandeService;
+import java.util.Date;
+
+public class DemandeHotel extends DemandeService {
+    private String hotelName;
+    private Date date_arrivée;
+    private Date date_départ;
+    private int nombreNuits;
+    private int nombreAdultes;
+    private int nombreEnfants;
+    private int nombreChambres;
+    private String typeChambre;
+    private String portion;
+
+    public DemandeHotel(String client, String hotelName, Date date_arrivée, Date date_départ,
+                        int nombreNuits, int nombreAdultes, int nombreEnfants, int nombreChambres,
+                        String typeChambre, String portion) {
+        super(client);  // Appel du constructeur parent avec le nom du client
+        this.hotelName = hotelName;
+        this.date_arrivée = date_arrivée;
+        this.date_départ = date_départ;
+        this.nombreNuits = nombreNuits;
+        this.nombreAdultes = nombreAdultes;
+        this.nombreEnfants = nombreEnfants;
+        this.nombreChambres = nombreChambres;
+        this.typeChambre = typeChambre;
+        this.portion = portion;
+    }
+
+    // Getters
+    public String getHotelName() { return hotelName; }
+    public Date getDate_arrivée() { return date_arrivée; }
+    public Date getDate_départ() { return date_départ; }
+    public int getNombreNuits() { return nombreNuits; }
+    public int getNombreAdultes() { return nombreAdultes; }
+    public int getNombreEnfants() { return nombreEnfants; }
+    public int getNombreChambres() { return nombreChambres; }
+    public String getTypeChambre() { return typeChambre; }
+    public String getPortion() { return portion; }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Hôtel: " + hotelName + ", Date_arrivée:" + date_arrivée +
+                ", Date_départ:" + date_départ + ", Nuits: " + nombreNuits + ", Adultes: " + nombreAdultes +
+                ", Enfants: " + nombreEnfants + ", Chambres: " + nombreChambres + ", Type: " + typeChambre +
+                ", Portion: " + portion;
+    }
+}
