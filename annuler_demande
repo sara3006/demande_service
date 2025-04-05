@@ -1,0 +1,20 @@
+package services;
+
+/**
+ * Classe pour permettre au client d’annuler une de ses demandes.
+ */
+public class AnnulerDemande extends GererDemande {
+
+    // Constructeur : initialise avec le nom du client
+    public AnnulerDemande(String nomClient) {
+        super(nomClient);
+    }
+
+    // Redéfinition de la méthode executer pour lancer le processus d’annulation
+    @Override
+    public void executer() {
+        System.out.println(" Annulation d’une demande...");
+        ClientActions client = new ClientActions(nomClient);
+        client.AnnulerDemande(); // Méthode à implémenter dans ClientActions
+    }
+}
