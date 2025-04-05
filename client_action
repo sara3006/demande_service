@@ -1,0 +1,239 @@
+package services;
+import services.DemandeService;
+import services.AnnulerDemande;
+import services.ConsulterDemande;
+import models.DemandeActivite;
+import models.DemandeHotel;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class ClientActions {
+
+    private String clientName;
+    private List<Object> mesDemandes;  // List to store all the client requests
+
+    // Constructor
+    public ClientActions(String clientName) {
+        this.clientName = clientName;
+        this.mesDemandes = new ArrayList<>();
+    }
+
+    // Method to handle the service request
+    public void DemandeService() {
+        Scanner scanner = new Scanner(System.in);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        System.out.println("\nQuel type de service voulez-vous demander ?");
+        System.out.println("1/ Demande d'Hôtel");
+        System.out.println("2/ Demande d'Activité");
+        System.out.print("Entrez votre choix (1 ou 2) : ");
+
+        int choix = scanner.nextInt();
+        scanner.nextLine(); // Consommer la ligne restante
+
+        if (choix == 1) { // Demande d'Hôtel
+            // Code pour la demande d'hôtel
+            System.out.print("\nNom de l'hôtel : ");
+            String hotelName = scanner.nextLine();
+
+            System.out.print("Date d'arrivée (JJ/MM/AAAA) : ");
+            Date date_arrivée = null;
+            while (date_arrivée == null) {
+                try {
+                    date_arrivée = dateFormat.parse(scanner.nextLine());
+                } catch (ParseException e) {
+                    System.out.print("Format invalide ! ");
+                }
+            }
+
+            System.out.print("\nDate de départ (JJ/MM/AAAA) : ");
+            Date date_départ = null;
+            while (date_départ == null) {
+                try {
+                    date_départ = dateFormat.parse(scanner.nextLine());
+                    if (!date_départ.after(date_arrivée)) {
+                        System.out.print(" La date de départ doit être après la date d'arrivée ! Réessayez : ");
+                        date_départ = null;
+                    }
+                } catch (ParseException e) {
+                    System.out.print("Format invalide ! Essayez encore (JJ/MM/AAAA) : ");
+                }
+            }
+
+            // Calcul automatique du nombre de nuits
+            long diffMillis = date_départ.getTime() - date_arrivée.getTime();
+            int nombreNuits = (int) (diffMillis / (1000 * 60 * 60 * 24));
+            System.out.println(" Nombre de nuits : " + nombreNuits);
+
+            System.out.print("Nombre d'adultes : ");
+            int nombreAdultes = scanner.nextInt();
+
+            System.out.print("Nombre d'enfants : ");
+            int nombreEnfants = scanner.nextInt();
+
+            System.out.print("Nombre de chambres : ");
+            int nombreChambres = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.println("Type de chambre : ");
+            System.out.println("1. Simple");
+            System.out.println("2. Double");
+            System.out.println("3. Suite");
+            System.out.print("Choisissez une option (: ");
+            int choixChambre = scanner.nextInt();
+            scanner.nextLine();  // Pour consommer la ligne restante après nextInt()
+
+            String typeChambre = "";
+            switch (choixChambre) {
+                case 1:
+                    typeChambre = "Simple";
+                    break;
+                case 2:
+                    typeChambre = "Double";
+                    break;
+                case 3:
+                    typeChambre = "Suite";
+                    break;
+                default:
+                    System.out.println("Choix invalide.");
+                    break;
+            }
+
+            System.out.println("Ponsion : ");
+            System.out.println("1. Demi-pension");
+            System.out.println("2. Pension complète");
+            System.out.print("Choisissez une option  : ");
+            int choixPonsion = scanner.nextInt();
+            scanner.nextLine();  // Pour consommer la ligne restante après nextInt()
+
+            String portion = "";
+            switch (choixPonsion) {
+                case 1:
+                    portion = "Demi-pension";
+                    break;
+                case 2:
+                    portion = "Pension complète";
+                    break;
+                default:
+                    System.out.println("Choix invalide.");
+                    break;
+            }
+
+            System.out.println("Type de chambre choisi : " + typeChambre);
+            System.out.println("Portion choisie : " + portion);
+
+
+            // Création et ajout de la demande d'hôtel
+            DemandeHotel demande = new DemandeHotel(clientName, hotelName, date_arrivée, date_départ, nombreNuits, nombreAdultes, nombreEnfants, nombreChambres, typeChambre, portion);
+            ajouterDemande(demande);
+
+        }
+        else if (choix == 2) { // Demande d'Activité
+            // Demander les informations pour la demande d'activité
+            System.out.println("\n Choisissez une activité :");
+            System.out.println("1️⃣ Ski");
+            System.out.println("2️⃣ Plongée");
+            System.out.println("3️⃣ Randonnée");
+            System.out.print("👉 Entrez votre choix (1, 2 ou 3) : ");
+
+            int choixActivite = scanner.nextInt();
+            scanner.nextLine(); // vider le buffer
+
+            String nomActivite = "";
+            switch (choixActivite) {
+                case 1:
+                    nomActivite = "Ski";
+                    break;
+                case 2:
+                    nomActivite = "Plongée";
+                    break;
+                case 3:
+                    nomActivite = "Randonnée";
+                    break;
+                default:
+                    System.out.println(" Choix invalide !");
+                    return; // on sort si le choix est invalide
+            }
+
+            // Define the dateActivite variable
+            Date dateActivite = null;
+            System.out.print(" Date de l'activité (format AAAA-MM-JJ) : ");
+            while (dateActivite == null) {
+                try {
+                    dateActivite = dateFormat.parse(scanner.nextLine());
+                } catch (ParseException e) {
+                    System.out.print("Format invalide ! Essayez encore (AAAA-MM-JJ) : ");
+                }
+            }
+
+            System.out.print(" Nombre de participants : ");
+            int nbParticipants = scanner.nextInt();
+            scanner.nextLine(); // vider le buffer
+
+            System.out.print(" Guide nécessaire ? (oui/non) : ");
+            String guideStr = scanner.nextLine();
+            boolean guideNecessaire = guideStr.equalsIgnoreCase("oui");
+
+            // Création et ajout de la demande
+            DemandeActivite demande = new DemandeActivite(clientName, nomActivite, dateActivite, nbParticipants, guideNecessaire);
+            ajouterDemande(demande);
+        }
+
+    else {
+            System.out.println("Choix invalide !");
+        }
+    }
+
+    // Méthode pour ajouter une demande à la liste
+    public void ajouterDemande(Object demande) {
+        mesDemandes.add(demande);
+        System.out.println("Demande ajoutée avec succès !");
+    }
+
+    // Afficher toutes les demandes
+    public void afficherDemandes() {
+        for (Object demande : mesDemandes) {
+            System.out.println(demande);
+        }
+    }
+
+    // Getter pour accéder à mesDemandes
+    public List<Object> getMesDemandes() {
+        return mesDemandes;
+    }
+    public void ConsulterDemande() {
+        if (mesDemandes.isEmpty()) {
+            System.out.println("Vous n'avez aucune demande.");
+        } else {
+            System.out.println("\nVoici toutes vos demandes : ");
+            for (Object demande : mesDemandes) {
+                System.out.println(demande);
+            }
+        }
+    }
+
+    public void AnnulerDemande() {
+        Scanner scanner = new Scanner(System.in);
+
+        // Affichage des demandes existantes
+        System.out.println("\nVoici vos demandes actuelles : ");
+        afficherDemandes();
+
+        // Demande de l'index de la demande à annuler
+        System.out.print("\nEntrez l'index de la demande à annuler (0 pour le premier) : ");
+        int index = scanner.nextInt();
+
+        // Vérifier si l'index est valide
+        if (index >= 0 && index < mesDemandes.size()) {
+            mesDemandes.remove(index);
+            System.out.println("Demande annulée avec succès.");
+        } else {
+            System.out.println("Index invalide.");
+        }
+    }
+
+}
