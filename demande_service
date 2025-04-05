@@ -1,0 +1,19 @@
+package services;
+
+import services.ClientActions;
+import java.util.Date;
+
+public class DemandeService extends GererDemande {
+
+    public DemandeService(String client) {
+        super(client);
+    }
+
+    // Redéfinition de la méthode executer pour lancer le processus de demande de service
+    @Override
+    public void executer() {
+        System.out.println("Création d’une nouvelle demande de service...");
+        ClientActions client = new ClientActions(nomClient);
+        client.DemandeService(); // Assurez-vous que cette méthode est correctement implémentée dans ClientActions
+    }
+}
