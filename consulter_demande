@@ -1,0 +1,21 @@
+package services;
+
+/**
+ * Classe qui permet de consulter les demandes existantes du client.
+ */
+public class ConsulterDemande extends GererDemande {
+
+    // Constructeur : on transmet le nom du client
+    public ConsulterDemande(String nomClient) {
+        super(nomClient); // Appel au constructeur de la classe mère
+    }
+
+    // Redéfinition de la méthode executer pour afficher les demandes
+    @Override
+    public void executer() {
+        System.out.println(" Consultation des demandes...");
+        ClientActions client = new ClientActions(nomClient);
+        client.ConsulterDemande(); // Appel à la méthode qui affiche les demandes du client
+    }
+}
+
