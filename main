@@ -1,0 +1,51 @@
+package Main; // Déclare que cette classe appartient au package "Main"
+
+import services.ClientActions; // Importation de la classe ClientActions
+import java.util.Scanner; // Importation de Scanner pour les entrées utilisateur
+
+public class Main { // Déclaration correcte de la classe
+    public static void main(String[] args) { // Méthode main correctement définie
+        Scanner scanner = new Scanner(System.in); // Scanner pour la lecture des entrées
+
+        // Demande du nom du client
+        System.out.print(" Entrez votre nom : ");
+        String clientName = scanner.nextLine(); // Récupère le nom du client
+
+        // Création d'un objet ClientActions pour gérer les demandes du client
+        ClientActions client = new ClientActions(clientName);
+
+        while (true) {
+            // Affichage du menu
+            System.out.println("\n Menu Principal");
+            System.out.println("1/ Faire une demande de service");
+            System.out.println("2/ Consulter mes demandes");
+            System.out.println("3/ Annuler une demande ");
+            System.out.println("4/ Quitter");
+            System.out.print(" Entrez votre choix : ");
+
+            int choix = scanner.nextInt(); // Lire l'option choisie
+            scanner.nextLine(); // Consommer la ligne restante pour éviter les bugs
+
+            // Traitement du choix de l'utilisateur
+            switch (choix) {
+                case 1:
+                    client.DemandeService(); // Ouvre le formulaire pour une demande
+                    break;
+                case 2:
+                    client.ConsulterDemande(); // Affiche les demandes enregistrées
+                    break;
+                case 3:
+                    client.AnnulerDemande(); // Affiche les demandes enregistrées
+                    break;
+                case 4:
+                    System.out.println(" Merci et à bientôt !");
+                    scanner.close(); // Fermeture du scanner
+                    System.exit(0); // Quitte le programme
+                    break;
+                default:
+                    System.out.println(" Choix invalide !"); // Message d'erreur si le choix n'est pas valide
+            }
+        }
+    }
+}
+
